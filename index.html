@@ -36,7 +36,9 @@
         var fasterPerc = fasterSampleLength / sampleLength;
         var slowerPerc = slowerSampleLength / sampleLength;
       
-        result.textContent = `${fasterPerc}% stretch | ${fasterSampleLength} seconds | ${fasterReps} repetitions\n${slowerPerc}% stretch | ${slowerSampleLength} seconds | ${slowerReps} repetitions`
+
+        var hhmmss =  new Date(totalTime * 1000).toISOString().slice(11, 19);
+        result.textContent = `${fasterPerc}% stretch | ${fasterSampleLength} seconds | ${fasterReps} repetitions\n${slowerPerc}% stretch | ${slowerSampleLength} seconds | ${slowerReps} repetitions\n${hhmmss} total length`
       }
       
       sampleLengthIn.addEventListener('input', function (e) {
