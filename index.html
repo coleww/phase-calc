@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Phasing Calculator</title>
+  </head>
+  <body>
+    <main style="max-width: 680px; margin: 48px auto;">
+      <div>
+        If you want to make a phasing composition 
+        where a sample of some length 
+        is repeated some number of times, 
+        what % do you need to stretch that sample so that it perfectly phases?
+      </div>
+      <div style="border: 1px solid darkblue; border-radius: 6px; padding: 18px;">
+        <label>Sample Length: <input type="text" id="sample"/></label>
+        <label>Repetitions: <input type="text" id="reps"/></label>
+        <pre id="result"></pre>
+      </div>
+    </main>
+
+    <script type="text/javascript">
+      var result = document.getElementById('result');
+      var sampleLengthIn = document.getElementById('sample');
+      var repsIn = document.getElementById('reps');
+      var sampleLength, reps;
+      
+      function phaseCalc() {
+        if (isNaN(sampleLength) || isNaN(reps) || !sampleLength || !reps) return;
+        var fasterReps = reps + 1;
+        var slowerReps = reps - 1;
+        var totalTime = reps * sampleLength;
+        var fasterSampleLength = totalTime / fasterReps;
+        var slowerSampleLength = totalTime / slowerReps;
+      
+        var fasterPerc = fasterSampleLength / sampleLength;
+        var slowerPerc = slowerSampleLength / sampleLength;
+      
+        result.textContent = `${fasterPerc}% stretch | ${fasterSampleLength} seconds | ${fasterReps} repetitions\n${slowerPerc}% stretch | ${slowerSampleLength} seconds | ${slowerReps} repetitions`
+      }
+      
+      sampleLengthIn.addEventListener('input', function (e) {
+        // sample length can be float
+        sampleLength = Number(e.target.value);
+        phaseCalc();
+      })
+      
+      repsIn.addEventListener('input', function (e) {
+        // reps should be a whole integer, ~~ converts string num to int or 0
+        reps = ~~e.target.value;
+        phaseCalc();
+      })
+      
+    </script>
+  </body>
+</html>
+
